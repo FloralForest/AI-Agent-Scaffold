@@ -1,0 +1,2 @@
+26-10-16.15:09:42.657 [main            ] WARN  ClassPathMapperScanner - No MyBatis mapper was found in '[com.AI]' package. Please check your configuration.
+26-10-16.15:11:27.376 [main            ] WARN  ClassPathMapperScanner - No MyBatis mapper was found in '[com.AI]' package. Please check your configuration.

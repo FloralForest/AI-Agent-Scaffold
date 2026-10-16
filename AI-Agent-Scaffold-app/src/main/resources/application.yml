@@ -1,0 +1,5 @@
+spring:
+  config:
+    name: AI-Agent-Scaffold-app
+  profiles:
+    active: dev
