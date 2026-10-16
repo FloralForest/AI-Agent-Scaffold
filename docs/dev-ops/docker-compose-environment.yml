@@ -11,27 +11,18 @@ services:
       MYSQL_ROOT_PASSWORD: 123456
     networks:
       - my-network
-    depends_on:
-      - mysql-job-dbdata
     ports:
       - "13306:3306"
     volumes:
       - ./mysql/sql:/docker-entrypoint-initdb.d
+      # 显式挂载数据卷；旧 volumes_from 数据需先迁移，不能直接切换。
+      - mysql-data:/var/lib/mysql
     healthcheck:
       test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
       interval: 5s
       timeout: 10s
       retries: 10
       start_period: 15s
-    volumes_from:
-      - mysql-job-dbdata
-
-  # 自动加载数据
-  mysql-job-dbdata:
-    image: alpine:3.18.2
-    container_name: mysql-job-dbdata
-    volumes:
-      - /var/lib/mysql
 
   # phpmyadmin https://hub.docker.com/_/phpmyadmin
   phpmyadmin:
@@ -94,3 +85,6 @@ services:
 networks:
   my-network:
     driver: bridge
+
+volumes:
+  mysql-data:

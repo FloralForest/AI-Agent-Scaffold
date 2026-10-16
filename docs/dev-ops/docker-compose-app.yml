@@ -4,7 +4,8 @@ version: '3.8'
 # 你需要修改system为你自身系统的仓库名
 services:
   AI-Agent-Scaffold:
-    image: system/AI-Agent-Scaffold:1.0
+    # 镜像仓库路径必须小写；构建镜像时使用相同名称和标签。
+    image: system/ai-agent-scaffold:1.0
     container_name: AI-Agent-Scaffold
     restart: on-failure
     ports:

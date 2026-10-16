@@ -1,5 +1,5 @@
 CONTAINER_NAME=AI-Agent-Scaffold
-IMAGE_NAME=system/AI-Agent-Scaffold:1.0
+IMAGE_NAME=system/ai-agent-scaffold:1.0
 PORT=8091
 
 echo "容器部署开始 ${CONTAINER_NAME}"
