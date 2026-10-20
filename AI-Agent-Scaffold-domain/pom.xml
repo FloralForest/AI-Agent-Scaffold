@@ -4,41 +4,55 @@
     <parent>
         <groupId>com.AI</groupId>
         <artifactId>AI-Agent-Scaffold</artifactId>
-        <version>1.0</version>
+        <version>1.0.0.2</version>
     </parent>
 
     <artifactId>AI-Agent-Scaffold-domain</artifactId>
 
     <dependencies>
+        <!-- Spring 基础容器、配置绑定和日志；先声明，避免聚合工具包内的旧 Spring 类抢先加载。 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+        <!-- 设计模式工具：提供 StrategyHandler 和多线程策略路由，串联智能体装配节点。 -->
+        <dependency>
+            <groupId>cn.bugstack.wrench</groupId>
+            <artifactId>xfg-wrench-starter-design-framework</artifactId>
+        </dependency>
+        <!-- OpenAI 兼容协议模型 SDK：创建客户端、组织请求并解析回复，不自动发起调用。 -->
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-openai</artifactId>
+        </dependency>
+        <!-- MCP 工具适配：将外部 MCP 服务的工具暴露为 Spring AI 的 ToolCallback。 -->
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-mcp</artifactId>
+        </dependency>
+        <!-- ADK 智能体核心：提供模型抽象、会话、运行器及顺序、并行、循环编排。 -->
+        <dependency>
+            <groupId>com.google.adk</groupId>
+            <artifactId>google-adk</artifactId>
+        </dependency>
+        <!-- 模型桥接：让 ADK 使用 Spring AI ChatModel，核心和适配器版本由父 POM 对齐。 -->
+        <dependency>
+            <groupId>com.google.adk</groupId>
+            <artifactId>google-adk-spring-ai</artifactId>
+            <exclusions>
+                <!-- 只引入模型适配功能，不携带 ADK 开发调试 Web 服务。 -->
+                <exclusion>
+                    <groupId>com.google.adk</groupId>
+                    <artifactId>google-adk-dev</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- 编译期生成 getter、setter、构造器和日志字段，不负责运行期依赖注入。 -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.auth0</groupId>
-            <artifactId>java-jwt</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>commons-codec</groupId>
-            <artifactId>commons-codec</artifactId>
-        </dependency>
-        <!-- 系统模块 -->
+        <!-- 项目公共类型：复用统一异常、响应码和常量等定义，版本跟随父工程。 -->
         <dependency>
             <groupId>com.AI</groupId>
             <artifactId>AI-Agent-Scaffold-types</artifactId>
@@ -48,6 +62,7 @@
     <build>
         <finalName>AI-Agent-Scaffold-domain</finalName>
         <plugins>
+            <!-- 将当前工程生成 Maven 脚手架模板的构建插件，不是业务运行依赖。 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-archetype-plugin</artifactId>

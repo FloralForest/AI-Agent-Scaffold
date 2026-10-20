@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.AI</groupId>
         <artifactId>AI-Agent-Scaffold</artifactId>
-        <version>1.0</version>
+        <version>1.0.0.2</version>
     </parent>
 
     <artifactId>AI-Agent-Scaffold-infrastructure</artifactId>

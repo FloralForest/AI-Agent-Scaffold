@@ -4,14 +4,41 @@
     <parent>
         <groupId>com.AI</groupId>
         <artifactId>AI-Agent-Scaffold</artifactId>
-        <version>1.0</version>
+        <version>1.0.0.2</version>
     </parent>
 
     <artifactId>AI-Agent-Scaffold-app</artifactId>
 
     <packaging>jar</packaging>
 
+    <properties>
+        <!-- 保留默认跳过测试，允许命令行显式开启指定的离线回归测试。 -->
+        <skipTests>true</skipTests>
+    </properties>
+
     <dependencies>
+        <!-- AI 版本继承父 POM；普通 SDK 由业务显式使用，不自动配置模型。 -->
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-model</artifactId>
+        </dependency>
+        <!-- 普通 SDK 供手动示例使用，不会自动创建模型 Bean 或要求启动密钥。 -->
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-openai</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j-open-ai</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.adk</groupId>
+            <artifactId>google-adk</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -20,6 +47,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
@@ -115,7 +146,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
-                    <skipTests>true</skipTests>
+                    <skipTests>${skipTests}</skipTests>
                     <testFailureIgnore>false</testFailureIgnore>
                     <includes>
                         <include>**/*Test.java</include>
