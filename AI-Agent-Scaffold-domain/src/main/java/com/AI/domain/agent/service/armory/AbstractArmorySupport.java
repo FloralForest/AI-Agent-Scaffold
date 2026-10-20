@@ -16,7 +16,10 @@ import org.springframework.context.ApplicationContext;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 
-// 装配基类仅提供公共前置处理，具体执行和节点选择由子类实现。
+/**
+ * 所有装配节点的共同基类，复用策略树路由、Spring Bean 注册和 Bean 查询能力。
+ * multiThread 钩子当前为空实现，继承此类不会自动并行执行节点。
+ */
 public abstract class AbstractArmorySupport extends AbstractMultiThreadStrategyRouter<ArmoryCommandEntity, DefaultArmoryFactory.DynamicContext, AiAgentRegisterVO> {
     protected final Logger log = LoggerFactory.getLogger(AbstractArmorySupport.class);
 

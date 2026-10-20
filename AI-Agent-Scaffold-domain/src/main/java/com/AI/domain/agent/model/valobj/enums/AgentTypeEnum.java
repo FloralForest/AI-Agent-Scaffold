@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+/** 将 YAML 中的工作流类型映射到对应的装配策略节点。 */
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor

@@ -16,7 +16,8 @@ import java.util.List;
 
 
 /**
- * 子流转节点
+ * 循环工作流装配节点：按名称收集子 Agent，构建带最大迭代次数限制的 ADK LoopAgent。
+ * 循环次数和是否提前结束由工作流配置及 Agent 执行结果决定。
  * */
 @Slf4j
 @Service("loopAgentNode")

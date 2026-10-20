@@ -21,19 +21,20 @@ import java.util.*;
 
 
 /**
- * 默认的装配工厂
+ * 装配策略树工厂：提供 RootNode 作为统一入口，并创建节点间共享的动态上下文。
  */
 @Service
 public class DefaultArmoryFactory {
     @Resource
     private RootNode rootNode;
 
+    /** 返回装配策略树的根处理器；具体节点由各节点的 get() 方法继续选择。 */
     public StrategyHandler<ArmoryCommandEntity, DynamicContext, AiAgentRegisterVO> armoryStrategyHandler() {
         return rootNode;
     }
 
     /**
-     * 定义一个上下文对象，用于各个节点串联的时候，写入数据和使用数据
+     * 节点间共享的装配上下文，保存模型客户端、Agent 集合和工作流中间结果。
      */
     @Data
     @Builder

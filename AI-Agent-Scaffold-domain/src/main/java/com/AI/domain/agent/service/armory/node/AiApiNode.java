@@ -12,9 +12,14 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.ai.openai.api.OpenAiApi;
 import org.springframework.stereotype.Service;
 
+/**
+ * AI API 装配节点：按配置创建 OpenAI 兼容 API 客户端，并保存到共享上下文。
+ * 当前 get() 返回默认处理器，因此尚未把流程继续路由到 ChatModelNode。
+ */
 @Slf4j
 @Service
 public class AiApiNode extends AbstractArmorySupport {
+    /** 预期的后续节点；当前 get() 尚未返回此节点。 */
     @Resource
     private ChatModelNode chatModelNode;
 
@@ -44,7 +49,7 @@ public class AiApiNode extends AbstractArmorySupport {
     public StrategyHandler<ArmoryCommandEntity, DefaultArmoryFactory.DynamicContext, AiAgentRegisterVO> get(ArmoryCommandEntity requestParameter, DefaultArmoryFactory.DynamicContext dynamicContext) throws Exception {
 
         // 如果不需要下一个节点了，可以配置 defaultStrategyHandler
-        return defaultStrategyHandler;
+        return chatModelNode;
     }
 
 }

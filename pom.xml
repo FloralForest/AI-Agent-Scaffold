@@ -8,10 +8,15 @@
     <packaging>pom</packaging>
 
     <modules>
+        <!-- Spring Boot 应用入口、运行配置和启动后的智能体装配触发器。 -->
         <module>AI-Agent-Scaffold-app</module>
+        <!-- 智能体领域模型、装配流程和核心业务服务。 -->
         <module>AI-Agent-Scaffold-domain</module>
+        <!-- HTTP、任务和消息监听等外部触发适配层；当前主要保留模块骨架。 -->
         <module>AI-Agent-Scaffold-trigger</module>
+        <!-- 数据持久化与外部系统网关适配；当前主要保留模块骨架。 -->
         <module>AI-Agent-Scaffold-infrastructure</module>
+        <!-- 异常、响应码和常量等跨模块公共类型。 -->
         <module>AI-Agent-Scaffold-types</module>
     </modules>
 

@@ -10,22 +10,22 @@ ai:
             agent-desc: 一个测试的智能体
           module:
             ai-api:
-              base-url: https://apis.itedus.cn
-              api-key: sk-Sp2jx3yeq7x7HJ663bDc9bF0D34b4...配置你的apiKey
+              base-url: https://api.edgefn.net  #配置你的AI地址
+              api-key: sk-PeLQZFrAtfH3xqLw...... #配置你的AI Kay
               completions-path: v1/chat/completions
               embeddings-path: v1/embeddings
             chat-model:
-              model: gpt-4.1
+              model: GLM-5.3-Flash #配置你的AI
               tool-mcp-list:
                 - sse:
                     name: baidu-search
                     base-uri: https://appbuilder.baidu.com/v2/ai_search/mcp/
-                    sse-endpoint: sse?api_key=bce-v3/ALTAK-3zO...AI API Key
+                    sse-endpoint: sse?api_key=bce-v3/ALTAK-...... #配置你的百度千帆AI API Key
                     request-timeout: 5000
                 - sse:
                     name: baidu-map
                     base-uri: https://mcp.map.baidu.com/
-                    sse-endpoint: sse?ak=tV0NsP4Gmj8IL7mhvyjVZ7c6
+                    sse-endpoint: sse?ak=YmiSZmAbvc...... #配置你的百度MCP AK
                     request-timeout: 5000
             agents:
               - name: CodeWriterAgent

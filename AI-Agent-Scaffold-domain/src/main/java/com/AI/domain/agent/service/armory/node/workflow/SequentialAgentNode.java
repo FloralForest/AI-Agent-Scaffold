@@ -16,7 +16,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * sequential 序列
+ * 串行工作流装配节点：按配置顺序组合子 Agent，保存 SequentialAgent 并交给 RunnerNode。
+ * 前序 Agent 的状态可供后续 Agent 使用。
  * */
 @Slf4j
 @Service("sequentialAgentNode")

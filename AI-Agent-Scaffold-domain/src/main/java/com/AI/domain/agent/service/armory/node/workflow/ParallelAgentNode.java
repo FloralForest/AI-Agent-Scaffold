@@ -15,7 +15,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * parallel 并行
+ * 并行工作流装配节点：按名称收集子 Agent，构建 ADK ParallelAgent。
+ * 子任务适合彼此独立；需要读取前一子任务结果的任务应使用串行工作流。
  * */
 @Slf4j
 @Service("parallelAgentNode")

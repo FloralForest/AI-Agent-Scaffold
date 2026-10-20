@@ -17,7 +17,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * 主流转节点
+ * 工作流分发节点：保存 YAML 中的工作流列表，并按首个工作流类型选择对应装配节点。
+ * 循环、并行和串行表示可选工作流类型，不是固定连续执行的三个步骤。
  * */
 @Slf4j
 @Service

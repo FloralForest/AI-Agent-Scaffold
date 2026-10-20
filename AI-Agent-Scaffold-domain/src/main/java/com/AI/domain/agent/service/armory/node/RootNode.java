@@ -9,6 +9,7 @@ import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+/** 装配策略树的根节点，负责把请求交给 AI API 配置节点。 */
 @Slf4j
 @Service
 public class RootNode extends AbstractArmorySupport {

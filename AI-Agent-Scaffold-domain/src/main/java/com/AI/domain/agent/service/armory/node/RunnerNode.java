@@ -12,7 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 /**
- * 执行节点
+ * 执行器装配节点：基于 SequentialAgent 创建 InMemoryRunner，并按 agentId 注册 AiAgentRegisterVO。
+ * 此节点只准备执行对象，不创建对话会话，也不发起模型对话。
  * */
 @Slf4j
 @Service
