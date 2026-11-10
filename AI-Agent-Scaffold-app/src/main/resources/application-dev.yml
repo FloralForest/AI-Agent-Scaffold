@@ -17,6 +17,7 @@ spring:
   config:
     import:
       - classpath:agent/test-agent.yml # 导入项是路径字符串，classpath: 后不能加空格。
+      - classpath:agent/only-one-agent.yml
   datasource:
     username: root
     password: 123456

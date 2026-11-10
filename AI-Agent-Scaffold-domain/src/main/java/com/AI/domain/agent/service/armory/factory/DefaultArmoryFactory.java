@@ -55,7 +55,7 @@ public class DefaultArmoryFactory {
         /**
          * 当做最后一个智能体节点
          */
-        private SequentialAgent sequentialAgent;
+        //private SequentialAgent sequentialAgent;
 
 
         /**

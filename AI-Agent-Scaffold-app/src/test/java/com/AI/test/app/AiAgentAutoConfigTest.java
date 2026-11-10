@@ -51,4 +51,24 @@ public class AiAgentAutoConfigTest {
         new CountDownLatch(1).await();
     }
 
+    @Test
+    public void test_agent_03() throws InterruptedException {
+        //匹配配置文件agentId
+        AiAgentRegisterVO aiAgentRegisterVO = applicationContext.getBean("100003", AiAgentRegisterVO.class);
+        String appName = aiAgentRegisterVO.getAppName();
+        InMemoryRunner runner = aiAgentRegisterVO.getRunner();
+
+        Session session = runner.sessionService()
+                .createSession(appName, "kaii")
+                .blockingGet();
+
+        Content userMsg = Content.fromParts(Part.fromText("学习计划"));
+        Flowable<Event> events = runner.runAsync("kaii", session.id(), userMsg);
+
+        List<String> outputs = new ArrayList<>();
+        events.blockingForEach(event -> outputs.add(event.stringifyContent()));
+
+        log.info("测试结果:{}", JSON.toJSONString(outputs));
+    }
+
 }

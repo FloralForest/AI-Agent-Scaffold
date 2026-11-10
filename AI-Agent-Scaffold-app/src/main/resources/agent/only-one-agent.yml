@@ -1,0 +1,31 @@
+ai:
+  agent:
+    config:
+      tables:
+        testAgent03:
+          app-name: testAgent03
+          agent:
+            agent-id: 100003
+            agent-name: 单一智能体
+            agent-desc: 单一智能体
+          module:
+            ai-api:
+              base-url: https://api.edgefn.net  #配置你的AI地址
+              api-key: sk-PeLQZFrAtfH3xqLw...... #配置你的AI Kay
+              completions-path: v1/chat/completions
+              embeddings-path: v1/embeddings
+            chat-model:
+              model: GLM-5.3-Flash
+              tool-mcp-list:
+                - sse:
+                    name: baidu-search
+                    base-uri: https://appbuilder.baidu.com/v2/ai_search/mcp/
+                    sse-endpoint: sse?api_key=bce-v3/ALTAK-...... #配置你的百度千帆AI API Key
+                    request-timeout: 5000
+            agents:
+              - name: onlyAgent
+                description: 学习项目计划
+                instruction: |
+                  百度搜索，学习计划，总结搜索到了什么。
+            runner:
+              agent-name: onlyAgent

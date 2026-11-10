@@ -6,10 +6,16 @@ import com.AI.domain.agent.model.valobj.AiAgentConfigTableVO;
 import com.AI.domain.agent.model.valobj.AiAgentRegisterVO;
 import com.AI.domain.agent.service.armory.AbstractArmorySupport;
 import com.AI.domain.agent.service.armory.factory.DefaultArmoryFactory;
+import com.AI.types.enums.ResponseCode;
+import com.AI.types.exception.AppException;
+import com.google.adk.agents.BaseAgent;
 import com.google.adk.agents.SequentialAgent;
 import com.google.adk.runner.InMemoryRunner;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * 执行器装配节点：基于 SequentialAgent 创建 InMemoryRunner，并按 agentId 注册 AiAgentRegisterVO。
@@ -19,26 +25,21 @@ import org.springframework.stereotype.Service;
 @Service
 public class RunnerNode extends AbstractArmorySupport {
 
-    @Override
     protected AiAgentRegisterVO doApply(ArmoryCommandEntity requestParameter, DefaultArmoryFactory.DynamicContext dynamicContext) throws Exception {
         log.info("Ai Agent 装配操作 - RunnerNode");
 
         AiAgentConfigTableVO aiAgentConfigTableVO = requestParameter.getAiAgentConfigTableVO();
         String appName = aiAgentConfigTableVO.getAppName();
-        String agentId = aiAgentConfigTableVO.getAgent().getAgentId();
-        String agentName = aiAgentConfigTableVO.getAgent().getAgentName();
-        String agentDesc = aiAgentConfigTableVO.getAgent().getAgentDesc();
+        AiAgentConfigTableVO.Agent agent = aiAgentConfigTableVO.getAgent();
+        String agentId = agent.getAgentId();
+        String agentName = agent.getAgentName();
+        String agentDesc = agent.getAgentDesc();
 
-        // 获取上下文对象
-        SequentialAgent sequentialAgent = dynamicContext.getSequentialAgent();
+        InMemoryRunner runner = getRunner(dynamicContext, aiAgentConfigTableVO, appName);
 
-        // 会话运行节点
-        InMemoryRunner runner = new InMemoryRunner(sequentialAgent, appName);
-
-        // 构建注册对象
         AiAgentRegisterVO aiAgentRegisterVO = AiAgentRegisterVO.builder()
-                .agentId(agentId)
                 .appName(appName)
+                .agentId(agentId)
                 .agentName(agentName)
                 .agentDesc(agentDesc)
                 .runner(runner)
@@ -48,6 +49,21 @@ public class RunnerNode extends AbstractArmorySupport {
         registerBean(agentId, AiAgentRegisterVO.class, aiAgentRegisterVO);
 
         return aiAgentRegisterVO;
+    }
+
+    @NotNull
+    private static InMemoryRunner getRunner(DefaultArmoryFactory.DynamicContext dynamicContext, AiAgentConfigTableVO aiAgentConfigTableVO, String appName) {
+        AiAgentConfigTableVO.Module.Runner runnerConfig = aiAgentConfigTableVO.getModule().getRunner();
+
+        String agentName = runnerConfig.getAgentName();
+        if (StringUtils.isBlank(agentName)) {
+            log.error("runner.agentName is null");
+            throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), ResponseCode.ILLEGAL_PARAMETER.getInfo());
+        }
+
+        BaseAgent baseAgent = dynamicContext.getAgentGroup().get(agentName);
+
+        return new InMemoryRunner(baseAgent, appName);
     }
 
     @Override
